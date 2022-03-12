@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -22,8 +21,9 @@ class MainActivity : AppCompatActivity() {
                 val wordsList = arrayOfNulls<String>(result.size())
                 for ((i, document) in result.withIndex()) {
                     Log.d("FIREBASE", "${document.id} => ${document.data}")
-                    val word = document.data.getValue("word").toString()
-                    wordsList[i] = word
+                    val eng = document.data.getValue("word").toString()
+                    val rus = document.data.getValue("rus").toString()
+                    wordsList[i] = "$eng - ${if (rus.isNullOrEmpty()) "?" else "$rus"}"
                 }
                 val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, wordsList)
                 listView.adapter = adapter
