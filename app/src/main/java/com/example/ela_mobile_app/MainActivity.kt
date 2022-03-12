@@ -2,6 +2,8 @@ package com.example.ela_mobile_app
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.ktx.firestore
@@ -12,17 +14,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val textView = findViewById<TextView>(R.id.textView)
-        textView.text = ""
+        val listView = findViewById<ListView>(R.id.listView)
         val db = Firebase.firestore
         db.collection("words")
             .get()
             .addOnSuccessListener { result ->
-                for (document in result) {
+                val wordsList = arrayOfNulls<String>(result.size())
+                for ((i, document) in result.withIndex()) {
                     Log.d("FIREBASE", "${document.id} => ${document.data}")
                     val word = document.data.getValue("word").toString()
-                    textView.text = "${textView.text}\n$word"
+                    wordsList[i] = word
                 }
+                val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, wordsList)
+                listView.adapter = adapter
             }
             .addOnFailureListener { exception ->
                 Log.w("FIREBASE", "Error getting documents.", exception)
