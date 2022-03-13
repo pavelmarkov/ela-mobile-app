@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ela-mobile-app</string>
+    <string name="start_button_text">Start</string>
+    <string name="start_img_desc">Start screen background</string>
 </resources>

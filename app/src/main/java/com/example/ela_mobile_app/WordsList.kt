@@ -9,10 +9,10 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class MainActivity : AppCompatActivity() {
+class WordsList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.words_list)
         val listView = findViewById<ListView>(R.id.listView)
         val db = Firebase.firestore
         db.collection("words")
